@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF to DOCX Converter</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen p-8">
+
+  <div class="max-w-2xl mx-auto space-y-6">
+    <header class="text-center">
+      <h1 class="text-3xl font-bold">PDF to DOCX Converter</h1>
+      <p class="text-gray-400 text-sm mt-1">100% Client-Side • Local Browser Processing</p>
+    </header>
+
+    <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 text-center space-y-4">
+      <input type="file" id="pdf-input" accept="application/pdf" class="hidden" onchange="handleFileSelect(event)">
+      <label for="pdf-input" class="cursor-pointer inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition">
+        Select PDF File
+      </label>
+      <p id="file-name" class="text-sm text-gray-400">No file selected</p>
+    </div>
+
+    <button id="convert-btn" onclick="convertPdfToDocx()" disabled class="w-full bg-green-600 disabled:bg-gray-700 hover:bg-green-700 text-white font-bold py-3 rounded-xl transition cursor-pointer disabled:cursor-not-allowed">
+      Convert to Word (.docx)
+    </button>
+
+    <div id="status" class="text-center text-sm font-mono text-yellow-400"></div>
+  </div>
+
+  <script>
+    // Set PDF.js worker source
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    let selectedFileBuffer = null;
+
+    function handleFileSelect(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      document.getElementById('file-name').innerText = file.name;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        selectedFileBuffer = e.target.result;
+        document.getElementById('convert-btn').disabled = false;
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    async function convertPdfToDocx() {
+      if (!selectedFileBuffer) return;
+
+      const statusEl = document.getElementById('status');
+      statusEl.innerText = 'Extracting PDF layout...';
+
+      try {
+        // 1. Load PDF using PDF.js
+        const pdf = await pdfjsLib.getDocument({ data: selectedFileBuffer }).promise;
+        const docxSections = [];
+
+        // 2. Loop through all pages and extract text blocks
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+          statusEl.innerText = `Processing page ${pageNum} of ${pdf.numPages}...`;
+          const page = await pdf.getPage(pageNum);
+          const textContent = await page.getTextContent();
+
+          const pageParagraphs = [];
+          let currentLineY = null;
+          let currentLineText = "";
+
+          // Group PDF text fragments into lines based on Y coordinates
+          for (const item of textContent.items) {
+            if (item.str.trim() === "") continue;
+
+            const transform = item.transform;
+            const y = Math.round(transform[5]); // Y coordinate on page
+
+            if (currentLineY !== null && Math.abs(y - currentLineY) > 5) {
+              // Create a docx paragraph for completed line
+              pageParagraphs.push(
+                new docx.Paragraph({
+                  children: [new docx.TextRun(currentLineText.trim())]
+                })
+              );
+              currentLineText = "";
+            }
+
+            currentLineY = y;
+            currentLineText += item.str + " ";
+          }
+
+          // Push last line of page
+          if (currentLineText.trim().length > 0) {
+            pageParagraphs.push(
+              new docx.Paragraph({
+                children: [new docx.TextRun(currentLineText.trim())]
+              })
+            );
+          }
+
+          docxSections.push({
+            properties: {},
+            children: pageParagraphs
+          });
+        }
+
+        statusEl.innerText = 'Building Word document...';
+
+        // 3. Create DOCX File
+        const doc = new docx.Document({ sections: docxSections });
+        const blob = await docx.Packer.toBlob(doc);
+
+        // 4. Save file locally
+        saveAs(blob, "converted_document.docx");
+        statusEl.innerText = '✅ Conversion complete! Download started.';
+
+      } catch (err) {
+        console.error(err);
+        statusEl.innerText = '❌ Error during conversion.';
+      }
+    }
+  </script>
+</body>
+</html>
