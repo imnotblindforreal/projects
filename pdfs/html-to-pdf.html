@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client-Side HTML to PDF Suite</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <style>
+    /* Styling standard HTML details/summary collapse tags */
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+    details[open] summary .chevron-icon {
+      transform: rotate(180deg);
+    }
+  </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-200 p-4 md:p-8">
+
+  <div class="max-w-5xl mx-auto space-y-6">
+
+    <header class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <h1 class="text-2xl font-extrabold tracking-tight">HTML to PDF Studio</h1>
+        <p class="text-sm text-gray-500 dark:text-gray-400">100% Client-Side • Local Processing • Zero Data Sent to Servers</p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button onclick="toggleDarkMode()" class="p-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition">
+          <span id="theme-icon">🌙</span>
+        </button>
+
+        <button onclick="generatePdf()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2.5 rounded-xl shadow-md hover:shadow-lg transition">
+          Export PDF
+        </button>
+      </div>
+    </header>
+
+    <details class="group bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <summary class="flex justify-between items-center px-6 py-4 cursor-pointer font-semibold select-none bg-gray-50 dark:bg-gray-800/80 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition border-b border-transparent group-open:border-gray-200 dark:group-open:border-gray-700">
+        <span class="flex items-center gap-2">
+          ⚙️ <span>PDF Engine Settings</span>
+        </span>
+        <svg class="chevron-icon w-5 h-5 text-gray-500 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        </svg>
+      </summary>
+
+      <div class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 text-sm">
+        
+        <div>
+          <label class="block font-medium mb-1.5 text-gray-700 dark:text-gray-300">File Name</label>
+          <input type="text" id="filename" value="document.pdf" class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+        </div>
+
+        <div>
+          <label class="block font-medium mb-1.5 text-gray-700 dark:text-gray-300">Paper Size</label>
+          <select id="format" class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+            <option value="a4" selected>A4</option>
+            <option value="letter">Letter</option>
+            <option value="legal">Legal</option>
+            <option value="a3">A3</option>
+            <option value="a5">A5</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-medium mb-1.5 text-gray-700 dark:text-gray-300">Orientation</label>
+          <select id="orientation" class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+            <option value="portrait" selected>Portrait</option>
+            <option value="landscape">Landscape</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-medium mb-1.5 text-gray-700 dark:text-gray-300">Margins (mm)</label>
+          <input type="number" id="margin" value="10" min="0" max="50" class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+        </div>
+
+        <div>
+          <label class="block font-medium mb-1.5 text-gray-700 dark:text-gray-300">DPI / Render Scale</label>
+          <input type="number" id="scale" value="2" min="1" max="4" step="0.5" class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+        </div>
+
+        <div>
+          <label class="block font-medium mb-1.5 text-gray-700 dark:text-gray-300">Canvas Image Format</label>
+          <select id="img-type" class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+            <option value="jpeg" selected>JPEG</option>
+            <option value="png">PNG</option>
+            <option value="webp">WebP</option>
+          </select>
+        </div>
+
+      </div>
+    </details>
+
+    <details open class="group bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <summary class="flex justify-between items-center px-6 py-4 cursor-pointer font-semibold select-none bg-gray-50 dark:bg-gray-800/80 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition border-b border-transparent group-open:border-gray-200 dark:group-open:border-gray-700">
+        <span class="flex items-center gap-2">
+          📝 <span>HTML Input</span>
+        </span>
+        <svg class="chevron-icon w-5 h-5 text-gray-500 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        </svg>
+      </summary>
+
+      <div class="p-6">
+        <textarea id="html-input" oninput="syncPreview()" rows="8" class="w-full font-mono text-sm bg-gray-900 text-green-400 dark:bg-black dark:text-green-300 border border-gray-700 rounded-xl p-4 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Type or paste custom HTML markup here..."></textarea>
+      </div>
+    </details>
+
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700">
+      <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+        <span>📄</span> Live Rendered Target Page
+      </h2>
+      
+      <div id="pdf-content" class="p-8 border rounded-xl bg-white text-gray-900 shadow-inner min-h-[350px]">
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Initial HTML Template
+    const initialMarkup = `<h1 style="color: #2563eb; font-size: 26px; font-weight: bold; margin-bottom: 12px;">Invoice & Report Demo</h1>
+<p style="color: #4b5563; font-size: 14px; margin-bottom: 20px;">This content is generated entirely client-side using JavaScript, Web APIs, and <strong>html2pdf.js</strong>.</p>
+
+<table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px;">
+  <thead>
+    <tr style="background-color: #f3f4f6; text-align: left;">
+      <th style="padding: 10px; border: 1px solid #e5e7eb;">Feature</th>
+      <th style="padding: 10px; border: 1px solid #e5e7eb;">Status</th>
+      <th style="padding: 10px; border: 1px solid #e5e7eb;">Cost</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding: 10px; border: 1px solid #e5e7eb;">Client Side Processing</td>
+      <td style="padding: 10px; border: 1px solid #e5e7eb;">Enabled</td>
+      <td style="padding: 10px; border: 1px solid #e5e7eb;">$0.00</td>
+    </tr>
+    <tr>
+      <td style="padding: 10px; border: 1px solid #e5e7eb;">Dark Mode Supported</td>
+      <td style="padding: 10px; border: 1px solid #e5e7eb;">Active</td>
+      <td style="padding: 10px; border: 1px solid #e5e7eb;">Free</td>
+    </tr>
+  </tbody>
+</table>`;
+
+    // Populate initial value into Textarea and Render
+    document.getElementById('html-input').value = initialMarkup;
+    document.getElementById('pdf-content').innerHTML = initialMarkup;
+
+    // Synchronize Textarea changes to Preview DOM
+    function syncPreview() {
+      const input = document.getElementById('html-input').value;
+      document.getElementById('pdf-content').innerHTML = input;
+    }
+
+    // Toggle Dark Mode Theme
+    function toggleDarkMode() {
+      const htmlEl = document.documentElement;
+      const icon = document.getElementById('theme-icon');
+      
+      if (htmlEl.classList.contains('dark')) {
+        htmlEl.classList.remove('dark');
+        icon.innerText = '🌙';
+      } else {
+        htmlEl.classList.add('dark');
+        icon.innerText = '☀️';
+      }
+    }
+
+    // PDF Generation Logic
+    function generatePdf() {
+      const element = document.getElementById('pdf-content');
+
+      const filename = document.getElementById('filename').value || 'document.pdf';
+      const format = document.getElementById('format').value;
+      const orientation = document.getElementById('orientation').value;
+      const margin = parseFloat(document.getElementById('margin').value) || 0;
+      const scale = parseFloat(document.getElementById('scale').value) || 2;
+      const imgType = document.getElementById('img-type').value;
+
+      const opt = {
+        margin: margin,
+        filename: filename,
+        image: { type: imgType, quality: 0.98 },
+        html2canvas: { scale: scale, logging: false },
+        jsPDF: { unit: 'mm', format: format, orientation: orientation }
+      };
+
+      html2pdf().set(opt).from(element).save();
+    }
+  </script>
+</body>
+</html>
