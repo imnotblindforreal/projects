@@ -5,7 +5,7 @@ JSVideo is an HTML5 video web component built entirely with vanilla JavaScript, 
 Add the JavaScript file containing the component's source code to your HTML file:
 
 ```html
-<script src="js-video.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/imnotblindforreal/projects@main/library/jsvideo/jsvideo.min.js" defer></script>
 ```
 ### Use HTML Tag
 Use the `<js-video>` HTML tag.
@@ -30,3 +30,10 @@ Use the `<js-video>` HTML tag.
 | `autoplay` | `Boolean` | `false` | `Automatically play video when the page loads (requires browser permission).` |
 | `autohide` | `Boolean` | `true` | `When autohide="false" is set, the control bar will not automatically hide when the mouse stops hovering.` |
 | `keyboard` | `Boolean` | `true` | `When keyboard="false" is set, the keyboard shortcut feature is disabled.` |
+
+### Keyboard Shortcuts
+When you click on or focus on the video player, you can use the following keyboard shortcuts:
+
+| Key | Action |
+| --- | --- |
+| `Space` / `K` | Play/Pause the video |
