@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #121212;
+            color: #ffffff;
+            padding: 20px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .controls {
+            margin: 15px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 8px 16px;
+            font-family: inherit;
+            cursor: pointer;
+            background: #333;
+            color: #fff;
+            border: 1px solid #666;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        canvas {
+            background: #000;
+            border: 2px solid #444;
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .output-section {
+            margin-top: 25px;
+            border-top: 1px dashed #444;
+            padding-top: 15px;
+        }
+
+        #capturedImg {
+            margin-top: 10px;
+            border: 1px solid #666;
+            max-width: 100%;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>TV Static Generator</h1>
+    <p>Black and white procedural noise generated with Math.random().</p>
+
+    <!-- Canvas Element for TV Distortion -->
+    <canvas id="tvCanvas" width="600" height="400"></canvas>
+
+    <!-- Interactive Buttons -->
+    <div class="controls">
+        <button id="resetBtn">Reset / New Pattern</button>
+        <button id="toggleAnimBtn">Pause Animation</button>
+        <button id="captureBtn">Capture Image (&lt;img&gt;)</button>
+    </div>
+
+    <!-- Captured Image Output Section -->
+    <div class="output-section">
+        <h3>Captured &lt;img&gt; Output:</h3>
+        <p id="placeholderText">Click "Capture Image" to render canvas.</p>
+        <img id="capturedImg" alt="Captured TV Static">
+    </div>
+
+    <script>
+        // DOM Element references
+        const canvas = document.getElementById('tvCanvas');
+        const ctx = canvas.getContext('2d');
+        const resetBtn = document.getElementById('resetBtn');
+        const toggleAnimBtn = document.getElementById('toggleAnimBtn');
+        const captureBtn = document.getElementById('captureBtn');
+        const capturedImg = document.getElementById('capturedImg');
+        const placeholderText = document.getElementById('placeholderText');
+
+        let isAnimating = true;
+        let animationFrameId = null;
+
+        // Function to draw noise, distortion, and scanlines using Math.random()
+        function drawTVStatic() {
+            const width = canvas.width;
+            const height = canvas.height;
+
+            // 1. Create pixel array for TV static noise
+            const imgData = ctx.createImageData(width, height);
+            const data = imgData.data;
+
+            for (let i = 0; i < data.length; i += 4) {
+                // Generate monochrome noise using Math.random()
+                const val = Math.random() < 0.5 ? 0 : Math.floor(Math.random() * 255);
+                data[i]     = val; // Red
+                data[i + 1] = val; // Green
+                data[i + 2] = val; // Blue
+                data[i + 3] = 255; // Alpha
+            }
+            ctx.putImageData(imgData, 0, 0);
+
+            // 2. Add random glitch / distortion horizontal displacement bands
+            const numGlitches = Math.floor(Math.random() * 4);
+            for (let i = 0; i < numGlitches; i++) {
+                const y = Math.floor(Math.random() * height);
+                const glitchHeight = Math.floor(Math.random() * 20) + 2;
+                const offsetX = (Math.random() - 0.5) * 40;
+
+                try {
+                    const slice = ctx.getImageData(0, y, width, glitchHeight);
+                    ctx.putImageData(slice, offsetX, y);
+                } catch (e) {
+                    // Safety check for edge canvas bounds
+                }
+            }
+
+            // 3. Add white noise bar tracking distortion
+            if (Math.random() < 0.4) {
+                const barY = Math.random() * height;
+                const barH = Math.random() * 10 + 2;
+                ctx.fillStyle = Math.random() > 0.5 ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.5)';
+                ctx.fillRect(0, barY, width, barH);
+            }
+
+            // Loop animation frame if active
+            if (isAnimating) {
+                animationFrameId = requestAnimationFrame(drawTVStatic);
+            }
+        }
+
+        // Action: Reset / Generate new static pattern
+        resetBtn.addEventListener('click', () => {
+            if (!isAnimating) {
+                drawTVStatic(); // Trigger single frame redraw if paused
+            }
+        });
+
+        // Action: Pause / Resume continuous loop
+        toggleAnimBtn.addEventListener('click', () => {
+            isAnimating = !isAnimating;
+            if (isAnimating) {
+                toggleAnimBtn.textContent = 'Pause Animation';
+                drawTVStatic();
+            } else {
+                toggleAnimBtn.textContent = 'Resume Animation';
+                cancelAnimationFrame(animationFrameId);
+            }
+        });
+
+        // Action: Capture current Canvas frame to <img> tag
+        captureBtn.addEventListener('click', () => {
+            // Convert canvas content to base64 Data URL
+            const dataUrl = canvas.toDataURL('image/png');
+            
+            // Set src on <img> element and display it
+            capturedImg.src = dataUrl;
+            capturedImg.style.display = 'block';
+            placeholderText.style.display = 'none';
+        });
+
+        // Start animation loop on window load
+        window.onload = function() {
+            drawTVStatic();
+        };
+    </script>
+</body>
+</html>
