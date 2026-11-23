@@ -1,0 +1,2119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You, With All My Heart — Our Love Sanctuary</title>
+
+    <!-- Google Fonts: Playfair Display, Dancing Script & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        script: ['"Dancing Script"', 'cursive'],
+                        sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        blush: {
+                            50: '#FFF9FA',
+                            100: '#FFEFF3',
+                            200: '#FFD6E0',
+                            300: '#FFB3C6',
+                            400: '#FF85A1',
+                            500: '#F45B7A',
+                            600: '#D6385B',
+                        },
+                        rosegold: {
+                            light: '#F7D9D2',
+                            DEFAULT: '#D49A89',
+                            dark: '#A86B5B',
+                        },
+                        cream: '#FFFBF7',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* ==========================================================================
+           THEME SYSTEM (:root CSS Custom Properties)
+           ========================================================================== */
+        :root {
+            /* Theme 1: Blush Rose (Default) */
+            --bg-1: #FFF8F6;
+            --bg-2: #FFEBF0;
+            --bg-3: #FDE2E4;
+            --card-glass: rgba(255, 255, 255, 0.78);
+            --card-solid: #FFFDFB;
+            --card-border: rgba(255, 255, 255, 0.92);
+            --text-main: #4A2530;
+            --text-muted: #875A67;
+            --accent-primary: #F45B7A;
+            --accent-deep: #D6385B;
+            --accent-soft: #FFEFF3;
+            --accent-border: rgba(244, 91, 122, 0.24);
+            --gold-accent: #D49A89;
+            --shadow-dreamy: 0 22px 48px -14px rgba(180, 75, 102, 0.16);
+            --modal-surface: rgba(255, 253, 251, 0.96);
+            --input-bg: rgba(255, 239, 243, 0.75);
+        }
+
+        [data-theme="midnight"] {
+            /* Theme 2: Starlight Midnight */
+            --bg-1: #161124;
+            --bg-2: #241734;
+            --bg-3: #331D3F;
+            --card-glass: rgba(34, 23, 50, 0.78);
+            --card-solid: #281B3B;
+            --card-border: rgba(244, 162, 184, 0.22);
+            --text-main: #FDECEF;
+            --text-muted: #C9A9B8;
+            --accent-primary: #FF7597;
+            --accent-deep: #FF9EBB;
+            --accent-soft: rgba(255, 117, 151, 0.16);
+            --accent-border: rgba(255, 158, 187, 0.28);
+            --gold-accent: #E6B89C;
+            --shadow-dreamy: 0 24px 52px -12px rgba(8, 4, 18, 0.55);
+            --modal-surface: rgba(32, 21, 48, 0.97);
+            --input-bg: rgba(255, 255, 255, 0.08);
+        }
+
+        [data-theme="sunset"] {
+            /* Theme 3: Sunset Peach */
+            --bg-1: #FFF8F1;
+            --bg-2: #FFECD9;
+            --bg-3: #FFD8CC;
+            --card-glass: rgba(255, 252, 248, 0.80);
+            --card-solid: #FFFDF9;
+            --card-border: rgba(255, 255, 255, 0.95);
+            --text-main: #4D2A22;
+            --text-muted: #8E6256;
+            --accent-primary: #E86F58;
+            --accent-deep: #C94D38;
+            --accent-soft: #FFF0E6;
+            --accent-border: rgba(232, 111, 88, 0.26);
+            --gold-accent: #D99B66;
+            --shadow-dreamy: 0 22px 48px -14px rgba(188, 92, 66, 0.17);
+            --modal-surface: rgba(255, 252, 248, 0.96);
+            --input-bg: rgba(255, 240, 230, 0.78);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 52%, var(--bg-3) 100%);
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+            transition: background 0.6s ease, color 0.4s ease;
+        }
+
+        /* Ambient Background Canvas */
+        #love-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Glassmorphic Romantic Card */
+        .dream-card {
+            background: var(--card-glass);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow-dreamy);
+            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease, background 0.5s ease;
+        }
+
+        .dream-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .accent-text { color: var(--accent-deep); }
+        .accent-primary-text { color: var(--accent-primary); }
+        .accent-soft-bg { background-color: var(--accent-soft); }
+        .accent-gradient-btn {
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--gold-accent) 100%);
+        }
+
+        /* ==========================================================================
+           INTERACTIVE LOVE LETTER & ENVELOPE ANIMATION
+           ========================================================================== */
+        .envelope-stage {
+            perspective: 1400px;
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 440px;
+            height: 280px;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .envelope-wrapper:hover:not(.is-open) {
+            transform: translateY(-6px) scale(1.015);
+        }
+
+        .envelope-back {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(145deg, #F8D1DA 0%, #F2B5C4 100%);
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 40px -12px rgba(168, 68, 92, 0.25);
+            z-index: 1;
+        }
+
+        .letter-sheet {
+            position: absolute;
+            left: 5%;
+            right: 5%;
+            bottom: 12px;
+            height: 245px;
+            background: linear-gradient(180deg, #FFFDFB 0%, #FFF7F5 100%);
+            color: #4A2530;
+            border: 1px solid rgba(212, 154, 137, 0.38);
+            border-radius: 1.25rem;
+            padding: 1.35rem 1.5rem;
+            z-index: 2;
+            transition: transform 0.85s cubic-bezier(0.34, 1.45, 0.64, 1), box-shadow 0.6s ease, height 0.6s ease;
+            box-shadow: 0 4px 16px rgba(74, 37, 48, 0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        .envelope-wrapper.is-open .letter-sheet {
+            transform: translateY(-135px);
+            height: 315px;
+            z-index: 6;
+            box-shadow: 0 24px 48px -10px rgba(130, 45, 68, 0.28);
+        }
+
+        @media (max-width: 480px) {
+            .envelope-wrapper.is-open .letter-sheet {
+                transform: translateY(-115px);
+                height: 300px;
+            }
+        }
+
+        .envelope-front {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .envelope-front::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #FBE2E8 0%, #F7C6D2 100%);
+            clip-path: polygon(0 0, 50% 54%, 0 100%);
+        }
+
+        .envelope-front::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(225deg, #FBE2E8 0%, #F5BFCF 100%);
+            clip-path: polygon(100% 0, 50% 54%, 100% 100%);
+        }
+
+        .envelope-bottom-fold {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, #F3B3C3 0%, #FAD4DE 100%);
+            clip-path: polygon(0 100%, 50% 48%, 100% 100%);
+            z-index: 4;
+            border-radius: 0 0 1.5rem 1.5rem;
+            pointer-events: none;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 62%;
+            background: linear-gradient(180deg, #F4AEC0 0%, #FAD6DF 100%);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transform-origin: top center;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.1s linear 0.25s;
+            z-index: 5;
+            border-radius: 1.5rem 1.5rem 0 0;
+            filter: drop-shadow(0 6px 10px rgba(155, 58, 82, 0.15));
+        }
+
+        .envelope-wrapper.is-open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .wax-seal {
+            position: absolute;
+            top: 52%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 64px;
+            height: 64px;
+            border-radius: 9999px;
+            background: radial-gradient(circle at 32% 30%, #E86A86 0%, #C23656 65%, #99223E 100%);
+            box-shadow: 0 8px 20px rgba(153, 34, 62, 0.4), inset 0 2px 5px rgba(255, 220, 228, 0.55), 0 0 0 4px rgba(212, 154, 137, 0.45);
+            z-index: 7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFF4F6;
+            transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+        }
+
+        .envelope-wrapper:hover:not(.is-open) .wax-seal {
+            transform: translate(-50%, -50%) scale(1.1) rotate(-6deg);
+        }
+
+        .envelope-wrapper.is-open .wax-seal {
+            transform: translate(-50%, -50%) scale(0.2) rotate(35deg);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* ==========================================================================
+           3D FLIPPABLE POLAROID SCRAPBOOK CARDS
+           ========================================================================== */
+        .polaroid-scene {
+            perspective: 1100px;
+            height: 310px;
+        }
+
+        .polaroid-card-3d {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.75s cubic-bezier(0.34, 1.35, 0.64, 1);
+            cursor: pointer;
+        }
+
+        .polaroid-card-3d.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .polaroid-face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            background: #FFFDFB;
+            color: #4A2530;
+            border-radius: 1.25rem;
+            padding: 0.9rem 0.9rem 1.15rem 0.9rem;
+            box-shadow: 0 16px 34px -10px rgba(74, 37, 48, 0.18);
+            border: 1px solid rgba(212, 154, 137, 0.28);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .polaroid-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(180deg, #FFFDFB 0%, #FFF5F7 100%);
+            padding: 1.35rem;
+        }
+
+        /* Washi Tape Accent on Polaroids */
+        .washi-tape {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-2deg);
+            width: 78px;
+            height: 22px;
+            background: rgba(244, 91, 122, 0.24);
+            backdrop-filter: blur(4px);
+            border-left: 2px dashed rgba(255, 255, 255, 0.6);
+            border-right: 2px dashed rgba(255, 255, 255, 0.6);
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        /* ==========================================================================
+           LOVE COUPON SCRATCH-OFF & REDEEM STAMP
+           ========================================================================== */
+        .coupon-ticket {
+            position: relative;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            background: var(--card-solid);
+            color: #4A2530;
+            border: 1.5px dashed rgba(212, 154, 137, 0.55);
+            box-shadow: 0 14px 30px -10px rgba(155, 58, 82, 0.14);
+        }
+
+        .scratch-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+            touch-action: none;
+            z-index: 10;
+            transition: opacity 0.6s ease;
+        }
+
+        .scratch-canvas.is-cleared {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes stampSlam {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(2.4) rotate(-24deg);
+            }
+            65% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0.92) rotate(-12deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1) rotate(-14deg);
+            }
+        }
+
+        .redeem-stamp {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-14deg);
+            border: 3px solid #D6385B;
+            color: #D6385B;
+            background: rgba(255, 249, 250, 0.9);
+            padding: 0.35rem 1rem;
+            border-radius: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            z-index: 15;
+            pointer-events: none;
+            box-shadow: 0 6px 18px rgba(214, 56, 91, 0.22);
+            animation: stampSlam 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        /* ==========================================================================
+           VIRTUAL GLASS LOVE JAR ANIMATIONS
+           ========================================================================== */
+        @keyframes jarShake {
+            0%, 100% { transform: rotate(0deg) translateY(0); }
+            18% { transform: rotate(-7deg) translateY(-4px); }
+            36% { transform: rotate(7deg) translateY(-6px); }
+            54% { transform: rotate(-5deg) translateY(-3px); }
+            72% { transform: rotate(5deg) translateY(-4px); }
+        }
+
+        .jar-shaking {
+            animation: jarShake 0.65s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+        }
+
+        @keyframes wishGlow {
+            0%, 100% { box-shadow: 0 0 22px rgba(244, 91, 122, 0.22); }
+            50% { box-shadow: 0 0 36px rgba(212, 154, 137, 0.45); }
+        }
+
+        .wish-scroll-card {
+            animation: wishGlow 3s ease-in-out infinite;
+        }
+
+        /* ==========================================================================
+           GENERAL TRANSITIONS & KEYFRAMES
+           ========================================================================== */
+        @keyframes cardPopIn {
+            0% {
+                opacity: 0;
+                transform: translateY(14px) scale(0.96) rotate(-1.2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+        }
+
+        .reason-animate {
+            animation: cardPopIn 0.48s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            14% { transform: scale(1.14); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.1); }
+            70% { transform: scale(1); }
+        }
+
+        .animate-heartbeat {
+            animation: heartBeat 2.4s ease-in-out infinite;
+        }
+
+        .modal-backdrop {
+            background: rgba(34, 15, 24, 0.48);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .modal-box {
+            background: var(--modal-surface);
+            color: var(--text-main);
+            border: 1px solid var(--accent-border);
+        }
+
+        .themed-input {
+            background: var(--input-bg);
+            color: var(--text-main);
+            border: 1px solid var(--accent-border);
+        }
+
+        .themed-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        ::-webkit-scrollbar {
+            width: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(226, 92, 121, 0.32);
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Floating Hearts & Bokeh Background Canvas -->
+    <canvas id="love-canvas"></canvas>
+
+    <!-- Main Romantic Sanctuary Wrapper -->
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10 flex flex-col min-h-screen justify-between">
+
+        <!-- ==========================================================================
+             TOP HEADER BAR: EMBLEM, THEME SWITCHER, AUDIO & CUSTOMIZATION
+             ========================================================================== -->
+        <header class="flex flex-wrap items-center justify-between gap-3 mb-8 sm:mb-10">
+            <!-- Brand / Emblem -->
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl dream-card flex items-center justify-center accent-primary-text shadow-sm">
+                    <i data-lucide="heart" class="w-5 h-5 fill-current animate-heartbeat"></i>
+                </div>
+                <div>
+                    <span class="font-script text-2xl sm:text-3xl accent-text block leading-none">
+                        Written in the Stars
+                    </span>
+                    <span class="text-xs text-[var(--text-muted)] tracking-wide">
+                        A sanctuary made for <strong id="header-recipient" class="font-semibold text-[var(--text-main)]">My Favorite Person</strong>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Action Controls: Theme Switcher, Audio & Customize -->
+            <div class="flex flex-wrap items-center gap-2 sm:gap-2.5">
+                <!-- Mood Theme Switcher Pill -->
+                <div class="dream-card px-2 py-1.5 rounded-full flex items-center gap-1" role="group" aria-label="Color mood switcher">
+                    <button onclick="setTheme('blush')" id="theme-btn-blush" class="px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all cursor-pointer flex items-center gap-1.5" title="Blush Rose Mood">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#F45B7A] inline-block"></span>
+                        <span class="hidden md:inline">Blush</span>
+                    </button>
+                    <button onclick="setTheme('midnight')" id="theme-btn-midnight" class="px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all cursor-pointer flex items-center gap-1.5" title="Starlight Midnight Mood">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#331D3F] border border-pink-300 inline-block"></span>
+                        <span class="hidden md:inline">Midnight</span>
+                    </button>
+                    <button onclick="setTheme('sunset')" id="theme-btn-sunset" class="px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all cursor-pointer flex items-center gap-1.5" title="Sunset Peach Mood">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#E86F58] inline-block"></span>
+                        <span class="hidden md:inline">Sunset</span>
+                    </button>
+                </div>
+
+                <!-- Ambient Heartbeat & Chime Toggle -->
+                <button onclick="toggleAudio()" id="audio-btn" class="dream-card px-3.5 py-2.5 rounded-full text-xs font-medium text-[var(--text-muted)] hover:opacity-90 flex items-center gap-2 cursor-pointer" title="Toggle romantic chimes & soft heartbeat">
+                    <i data-lucide="volume-x" id="audio-icon" class="w-4 h-4 accent-primary-text"></i>
+                    <span id="audio-label" class="hidden sm:inline">Melody Off</span>
+                </button>
+
+                <!-- Customize Names, Date, Letter & Reasons Modal Trigger -->
+                <button onclick="openCustomizeModal()" class="dream-card px-4 py-2.5 rounded-full text-xs font-semibold accent-text flex items-center gap-2 cursor-pointer">
+                    <i data-lucide="pen-tool" class="w-3.5 h-3.5"></i>
+                    <span>Personalize</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- ==========================================================================
+             HERO GREETING
+             ========================================================================== -->
+        <section class="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
+            <div class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full dream-card text-xs font-medium accent-text mb-4">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                <span>Every beat of my heart whispers your name</span>
+            </div>
+
+            <h1 class="font-serif text-3xl sm:text-5xl font-medium tracking-tight leading-tight mb-3">
+                To <span id="hero-recipient" class="font-script text-4xl sm:text-6xl accent-primary-text px-1">My Favorite Person</span>,
+            </h1>
+
+            <p class="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed max-w-xl mx-auto">
+                In a world full of fleeting moments, you are my favorite forever. Explore our love counter, unseal your letter, flip through our memories, and scratch open a date night surprise.
+            </p>
+        </section>
+
+        <!-- ==========================================================================
+             FEATURE 1: LIVE "TOGETHER SINCE" LOVE COUNTER & MILESTONE CELEBRATION
+             ========================================================================== -->
+        <section class="dream-card rounded-[2rem] p-6 sm:p-8 mb-12 sm:mb-14 relative overflow-hidden">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <!-- Left Label & Start Date -->
+                <div class="text-center md:text-left">
+                    <div class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider accent-text mb-1">
+                        <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                        <span>Together Since</span>
+                    </div>
+                    <h2 id="since-date-display" class="font-serif text-xl sm:text-2xl font-medium">
+                        February 14, 2024
+                    </h2>
+                    <p id="milestone-badge" class="text-xs text-[var(--text-muted)] mt-1.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full accent-soft-bg">
+                        <i data-lucide="award" class="w-3.5 h-3.5 accent-primary-text"></i>
+                        <span id="milestone-text">Counting every heartbeat with you</span>
+                    </p>
+                </div>
+
+                <!-- Live Ticking Digits Grid -->
+                <div class="grid grid-cols-4 gap-2.5 sm:gap-4 w-full md:w-auto">
+                    <div class="rounded-2xl accent-soft-bg px-3 sm:px-5 py-3 text-center border border-[var(--accent-border)]">
+                        <span id="counter-days" class="font-serif text-2xl sm:text-3xl font-semibold accent-text block leading-none">0</span>
+                        <span class="text-[10px] sm:text-xs uppercase tracking-wider text-[var(--text-muted)] mt-1 block">Days</span>
+                    </div>
+                    <div class="rounded-2xl accent-soft-bg px-3 sm:px-5 py-3 text-center border border-[var(--accent-border)]">
+                        <span id="counter-hours" class="font-serif text-2xl sm:text-3xl font-semibold accent-text block leading-none">00</span>
+                        <span class="text-[10px] sm:text-xs uppercase tracking-wider text-[var(--text-muted)] mt-1 block">Hours</span>
+                    </div>
+                    <div class="rounded-2xl accent-soft-bg px-3 sm:px-5 py-3 text-center border border-[var(--accent-border)]">
+                        <span id="counter-minutes" class="font-serif text-2xl sm:text-3xl font-semibold accent-text block leading-none">00</span>
+                        <span class="text-[10px] sm:text-xs uppercase tracking-wider text-[var(--text-muted)] mt-1 block">Mins</span>
+                    </div>
+                    <div class="rounded-2xl accent-soft-bg px-3 sm:px-5 py-3 text-center border border-[var(--accent-border)]">
+                        <span id="counter-seconds" class="font-serif text-2xl sm:text-3xl font-semibold accent-primary-text block leading-none">00</span>
+                        <span class="text-[10px] sm:text-xs uppercase tracking-wider text-[var(--text-muted)] mt-1 block">Secs</span>
+                    </div>
+                </div>
+
+                <!-- Quick Edit Start Date Button -->
+                <button onclick="openCustomizeModal('date')" class="px-4 py-2 rounded-full text-xs font-medium accent-soft-bg accent-text hover:opacity-85 transition-opacity flex items-center gap-1.5 cursor-pointer shrink-0">
+                    <i data-lucide="calendar-heart" class="w-3.5 h-3.5"></i>
+                    <span>Set Date</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             CORE SECTION: INTERACTIVE WAX-SEALED LOVE LETTER ENVELOPE
+             ========================================================================== -->
+        <section class="mb-14 sm:mb-16 pt-4 sm:pt-8">
+            <div class="envelope-stage">
+                <div id="love-envelope" class="envelope-wrapper" onclick="toggleEnvelope()" role="button" tabindex="0" aria-label="Open or close love letter envelope">
+                    <div class="envelope-back"></div>
+
+                    <!-- Sliding Love Letter -->
+                    <article class="letter-sheet" onclick="event.stopPropagation()">
+                        <div class="flex items-center justify-between border-b border-blush-100 pb-2">
+                            <span class="font-script text-xl sm:text-2xl text-blush-500">
+                                Dearest <span id="letter-recipient">My Favorite Person</span>,
+                            </span>
+                            <button onclick="toggleEnvelope()" class="text-xs text-[#875A67] hover:text-blush-600 px-2 py-1 rounded-full hover:bg-blush-50 transition-colors cursor-pointer" title="Fold letter back into envelope">
+                                Fold <i data-lucide="chevron-down" class="w-3.5 h-3.5 inline"></i>
+                            </button>
+                        </div>
+
+                        <div class="my-auto py-2 overflow-y-auto max-h-[165px] pr-1">
+                            <p id="letter-body" class="font-serif italic text-sm sm:text-[15.5px] leading-relaxed text-[#4A2530]">
+                                “From the moment you walked into my life, ordinary days turned into golden memories. Thank you for your warmth, your laughter, and the quiet magic you bring simply by being you. Loving you is the easiest, sweetest thing I have ever done.”
+                            </p>
+                        </div>
+
+                        <div class="pt-2 border-t border-blush-100 flex items-end justify-between">
+                            <span class="text-[11px] text-[#875A67] flex items-center gap-1">
+                                <i data-lucide="heart" class="w-3 h-3 text-blush-400 fill-blush-400"></i> Always &amp; Forever
+                            </span>
+                            <div class="text-right">
+                                <span class="text-[11px] text-[#875A67] block">Yours endlessly,</span>
+                                <span id="letter-sender" class="font-script text-xl text-blush-600 leading-none">
+                                    Your Admirer
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <div class="envelope-front"></div>
+                    <div class="envelope-bottom-fold"></div>
+                    <div class="envelope-flap"></div>
+
+                    <!-- Interactive Crimson & Rose-Gold Wax Seal -->
+                    <div class="wax-seal" title="Tap to break the seal">
+                        <i data-lucide="heart" class="w-7 h-7 fill-current"></i>
+                    </div>
+                </div>
+
+                <p id="envelope-hint" class="text-center text-xs text-[var(--text-muted)] mt-4 flex items-center justify-center gap-1.5">
+                    <i data-lucide="hand" class="w-3.5 h-3.5 accent-primary-text"></i>
+                    Tap the wax seal to unseal your letter
+                </p>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             TWO-COLUMN GRID: REASONS DECK & VIRTUAL LOVE JAR OF WISHES
+             ========================================================================== -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-7 sm:gap-8 items-stretch mb-14">
+
+            <!-- CARD A: "Reasons I Adore You" Interactive Card Deck -->
+            <div class="dream-card rounded-[2rem] p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
+                <div class="flex items-center justify-between mb-5 relative z-10">
+                    <div class="flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-xl accent-soft-bg accent-primary-text flex items-center justify-center">
+                            <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        </span>
+                        <h2 class="font-serif text-xl sm:text-2xl font-medium">Reasons I Adore You</h2>
+                    </div>
+                    <span id="reason-counter" class="text-xs font-semibold px-3 py-1 rounded-full accent-soft-bg accent-text">
+                        #1 of 10
+                    </span>
+                </div>
+
+                <!-- Stacked Card Visual Deck -->
+                <div class="relative my-auto py-3">
+                    <div class="absolute inset-x-4 -bottom-1 h-full rounded-3xl bg-white/40 border border-white/60 transform rotate-2 pointer-events-none"></div>
+                    <div class="absolute inset-x-2 -bottom-0.5 h-full rounded-3xl bg-white/60 border border-white/80 transform -rotate-1 pointer-events-none"></div>
+
+                    <div id="reason-card" onclick="nextReason()" class="relative bg-gradient-to-br from-[#FFFDFB] via-[#FFF7F9] to-[#FFEFF3] text-[#4A2530] border border-white rounded-3xl p-6 sm:p-7 shadow-sm cursor-pointer select-none min-h-[205px] flex flex-col items-center justify-center text-center group">
+                        <div id="reason-icon-wrap" class="w-12 h-12 rounded-2xl accent-gradient-btn text-white flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition-transform">
+                            <i data-lucide="sun" class="w-6 h-6"></i>
+                        </div>
+                        <p id="reason-text" class="font-serif italic text-lg sm:text-xl leading-relaxed">
+                            “The way your eyes light up whenever you talk about the things that make you happy.”
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Deck Controls -->
+                <div class="flex items-center justify-between gap-3 mt-6 pt-4 border-t border-[var(--accent-border)]">
+                    <button onclick="prevReason()" class="px-4 py-2.5 rounded-2xl text-xs font-medium text-[var(--text-muted)] hover:opacity-80 transition-colors flex items-center gap-1.5 cursor-pointer">
+                        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Previous
+                    </button>
+
+                    <button onclick="nextReason()" class="flex-1 py-2.5 px-5 rounded-2xl text-xs font-semibold text-white accent-gradient-btn shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95">
+                        <span>Reveal Another Reason</span>
+                        <i data-lucide="heart" class="w-3.5 h-3.5 fill-current"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- FEATURE 4: VIRTUAL LOVE JAR / BOTTLE OF GLOWING WISHES -->
+            <div class="dream-card rounded-[2rem] p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
+                <div class="flex items-center justify-between mb-4 relative z-10">
+                    <div class="flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-xl accent-soft-bg accent-primary-text flex items-center justify-center">
+                            <i data-lucide="flask-round" class="w-4 h-4"></i>
+                        </span>
+                        <h2 class="font-serif text-xl sm:text-2xl font-medium">Jar of Love Wishes</h2>
+                    </div>
+                    <span class="text-xs font-medium text-[var(--text-muted)]">
+                        Tap jar to draw a wish
+                    </span>
+                </div>
+
+                <!-- Bespoke SVG Glass Apothecary Jar with Folded Paper Hearts -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-6 my-auto py-2">
+                    <div id="love-jar-container" onclick="drawLoveWish()" role="button" tabindex="0" aria-label="Shake Love Jar to pull a folded wish" class="cursor-pointer group relative shrink-0 select-none" title="Click to shake the jar & pull a wish">
+                        <svg width="136" height="172" viewBox="0 0 136 172" fill="none" xmlns="http://www.w3.org/2000/svg" class="drop-shadow-md transition-transform duration-300 group-hover:scale-105">
+                            <!-- Cork Stopper -->
+                            <path d="M46 12C46 8.68629 48.6863 6 52 6H84C87.3137 6 90 8.68629 90 12L86 28H50L46 12Z" fill="#D49A89"/>
+                            <path d="M50 10H86" stroke="#F7D9D2" stroke-width="2" stroke-linecap="round"/>
+                            <!-- Glass Rim -->
+                            <rect x="42" y="26" width="52" height="10" rx="5" fill="rgba(255,255,255,0.85)" stroke="#D49A89" stroke-width="1.5"/>
+                            <!-- Ribbon & Tag -->
+                            <path d="M44 37C58 41 78 41 92 37" stroke="#F45B7A" stroke-width="3.5" stroke-linecap="round"/>
+                            <path d="M84 38L96 52" stroke="#F45B7A" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="98" cy="55" r="7" fill="#FFFDFB" stroke="#D49A89" stroke-width="1.5"/>
+                            <path d="M98 58.2C98 58.2 94.5 55.8 94.5 53.7C94.5 52.6 95.3 51.8 96.3 51.8C97 51.8 97.6 52.2 98 52.8C98.4 52.2 99 51.8 99.7 51.8C100.7 51.8 101.5 52.6 101.5 53.7C101.5 55.8 98 58.2 98 58.2Z" fill="#F45B7A"/>
+                            <!-- Glass Body -->
+                            <path d="M45 36H91L108 58C113 64 115 72 115 80V144C115 156.15 105.15 166 93 166H43C30.85 166 21 156.15 21 144V80C21 72 23 64 28 58L45 36Z" fill="rgba(255, 255, 255, 0.42)" stroke="rgba(255, 255, 255, 0.9)" stroke-width="2.5"/>
+                            <!-- Folded Paper Scrolls & Glowing Hearts Inside -->
+                            <rect x="34" y="128" width="26" height="14" rx="5" transform="rotate(-14 34 128)" fill="#FFEFF3" stroke="#F45B7A" stroke-width="1.2"/>
+                            <rect x="64" y="134" width="28" height="14" rx="5" transform="rotate(11 64 134)" fill="#FFFDFB" stroke="#D49A89" stroke-width="1.2"/>
+                            <rect x="44" y="108" width="26" height="14" rx="5" transform="rotate(18 44 108)" fill="#FFD6E0" stroke="#F45B7A" stroke-width="1.2"/>
+                            <rect x="72" y="112" width="25" height="13" rx="5" transform="rotate(-22 72 112)" fill="#F7D9D2" stroke="#A86B5B" stroke-width="1.2"/>
+                            <rect x="33" y="92" width="24" height="13" rx="5" transform="rotate(-8 33 92)" fill="#FFFDFB" stroke="#F45B7A" stroke-width="1.2"/>
+                            <rect x="62" y="88" width="26" height="13" rx="5" transform="rotate(9 62 88)" fill="#FFEFF3" stroke="#D49A89" stroke-width="1.2"/>
+                            <!-- Sparkles inside jar -->
+                            <circle cx="52" cy="76" r="2.5" fill="#F45B7A" opacity="0.75"/>
+                            <circle cx="84" cy="72" r="2" fill="#D49A89" opacity="0.85"/>
+                            <circle cx="68" cy="64" r="2.5" fill="#FFFFFF" opacity="0.9"/>
+                            <!-- Glass Reflection Highlight -->
+                            <path d="M31 74V140" stroke="rgba(255,255,255,0.75)" stroke-width="3.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+
+                    <!-- Drawn Glowing Paper Wish Scroll -->
+                    <div id="wish-paper-box" class="flex-1 w-full bg-gradient-to-br from-[#FFFDFB] to-[#FFF2F5] text-[#4A2530] border border-[#F7D9D2] rounded-3xl p-5 sm:p-6 wish-scroll-card min-h-[175px] flex flex-col justify-between">
+                        <div class="flex items-center justify-between text-[11px] uppercase tracking-widest text-[#A86B5B] font-semibold mb-2">
+                            <span>Love Fortune</span>
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#F45B7A]"></i>
+                        </div>
+                        <p id="wish-text" class="font-serif italic text-base sm:text-lg leading-relaxed my-auto">
+                            “Tap the glass jar to unroll a glowing wish saved just for us.”
+                        </p>
+                        <div class="mt-3 pt-2 border-t border-blush-100 flex items-center justify-between">
+                            <span id="wish-tag" class="text-[11px] text-[#875A67]">Sealed with stardust</span>
+                            <button onclick="drawLoveWish()" class="text-xs font-semibold text-[#D6385B] hover:underline cursor-pointer">
+                                Pull Another &rarr;
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             FEATURE 2: INTERACTIVE "OUR MEMORY SCRAPBOOK" (3D FLIPPABLE POLAROIDS)
+             ========================================================================== -->
+        <section class="mb-14">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+                <div>
+                    <div class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider accent-text mb-1">
+                        <i data-lucide="camera" class="w-3.5 h-3.5"></i>
+                        <span>Our Scrapbook</span>
+                    </div>
+                    <h2 class="font-serif text-2xl sm:text-3xl font-medium">Moments Kept in Polaroids</h2>
+                </div>
+
+                <button onclick="openMemoryModal()" class="dream-card px-4 py-2.5 rounded-full text-xs font-semibold accent-text flex items-center gap-2 cursor-pointer">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    <span>Add New Memory</span>
+                </button>
+            </div>
+
+            <p class="text-xs text-[var(--text-muted)] mb-6 flex items-center gap-1.5">
+                <i data-lucide="rotate-cw" class="w-3.5 h-3.5 accent-primary-text"></i>
+                Tap any Polaroid photo to flip it over and read the secret handwritten note on the back.
+            </p>
+
+            <!-- Polaroid Grid -->
+            <div id="polaroid-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
+                <!-- Populated dynamically via JS -->
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             FEATURE 3: "LOVE COUPONS / DATE NIGHT SCRATCH-OFFS"
+             ========================================================================== -->
+        <section class="mb-14">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+                <div>
+                    <div class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider accent-text mb-1">
+                        <i data-lucide="ticket" class="w-3.5 h-3.5"></i>
+                        <span>Sweet Vouchers</span>
+                    </div>
+                    <h2 class="font-serif text-2xl sm:text-3xl font-medium">Date Night Scratch-Off Coupons</h2>
+                </div>
+
+                <button onclick="resetAllCoupons()" class="dream-card px-3.5 py-2 rounded-full text-xs font-medium text-[var(--text-muted)] hover:opacity-85 flex items-center gap-1.5 cursor-pointer" title="Re-coat foil on all coupons">
+                    <i data-lucide="refresh-ccw" class="w-3.5 h-3.5"></i>
+                    <span>Reset Foil</span>
+                </button>
+            </div>
+
+            <p class="text-xs text-[var(--text-muted)] mb-6 flex items-center gap-1.5">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5 accent-primary-text"></i>
+                Rub your finger or cursor across the rose-gold foil to reveal your date night gift, then stamp to redeem!
+            </p>
+
+            <!-- Scratch-Off Coupons Grid -->
+            <div id="coupons-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Populated dynamically via JS -->
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             PLAYFUL "WILL YOU BE MY FOREVER?" DODGING BUTTON MINI-GAME
+             ========================================================================== -->
+        <section id="forever-card" class="dream-card rounded-[2rem] p-7 sm:p-10 text-center max-w-2xl mx-auto w-full mb-12 relative overflow-hidden">
+            <div id="question-stage" class="relative z-10">
+                <div class="w-16 h-16 mx-auto rounded-full accent-soft-bg flex items-center justify-center mb-4">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="accent-primary-text animate-bounce">
+                        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" fill="currentColor" fill-opacity="0.25"/>
+                    </svg>
+                </div>
+
+                <h3 class="font-script text-3xl sm:text-5xl accent-text mb-2">
+                    Will you be my forever?
+                </h3>
+                <p id="playful-prompt" class="text-xs sm:text-sm text-[var(--text-muted)] max-w-sm mx-auto min-h-[38px] flex items-center justify-center">
+                    Choose wisely... though my heart already knows the answer!
+                </p>
+            </div>
+
+            <!-- Celebration State -->
+            <div id="celebration-stage" class="hidden py-2 relative z-10 reason-animate">
+                <div class="w-20 h-20 mx-auto rounded-full accent-gradient-btn text-white flex items-center justify-center mb-4 shadow-lg">
+                    <i data-lucide="heart" class="w-10 h-10 fill-current animate-heartbeat"></i>
+                </div>
+                <h3 class="font-script text-3xl sm:text-5xl accent-text mb-2">
+                    Yay! You made me the happiest!
+                </h3>
+                <p class="font-serif italic text-sm sm:text-base max-w-md mx-auto mb-4">
+                    “Here is to a lifetime of holding your hand, laughing together, and loving you more every single day.”
+                </p>
+                <button onclick="triggerHeartExplosion()" class="inline-flex items-center gap-1.5 px-5 py-2 rounded-full accent-soft-bg accent-text text-xs font-semibold hover:opacity-85 transition-opacity cursor-pointer">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Shower More Love
+                </button>
+            </div>
+
+            <!-- Playful Arena with 'Yes' and Dodging 'No' Button -->
+            <div id="button-arena" class="relative h-24 w-full flex items-center justify-center gap-4 mt-3 select-none">
+                <button id="yes-btn" onclick="handleYesClick()" class="z-20 px-8 py-3.5 rounded-2xl text-sm font-semibold text-white accent-gradient-btn shadow-lg hover:scale-105 active:scale-95 transition-transform cursor-pointer flex items-center gap-2">
+                    <span>Yes, Forever!</span>
+                    <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+                </button>
+
+                <button id="no-btn" onmouseenter="dodgeNoButton()" onclick="dodgeNoButton()" ontouchstart="dodgeNoButton(event)" class="z-20 px-5 py-2.5 rounded-2xl text-xs font-medium text-[#875A67] bg-white/95 border border-blush-200 shadow-sm transition-all duration-200 cursor-pointer">
+                    No
+                </button>
+            </div>
+        </section>
+
+        <!-- Romantic Footer -->
+        <footer class="text-center text-xs text-[var(--text-muted)] pt-5 border-t border-[var(--accent-border)] flex flex-col sm:flex-row items-center justify-between gap-2">
+            <p class="flex items-center gap-1.5">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5 accent-primary-text"></i>
+                Tap anywhere on the page to scatter floating hearts
+            </p>
+            <p>
+                Crafted with endless love for <span id="footer-recipient" class="font-semibold accent-text">My Favorite Person</span>
+            </p>
+        </footer>
+    </div>
+
+    <!-- ==========================================================================
+         MODAL 1: EXPANDED PERSONALIZATION MODAL (NAMES, DATE, LETTER & REASONS)
+         ========================================================================== -->
+    <div id="customize-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop" onclick="closeCustomizeModal()">
+        <div class="modal-box backdrop-blur-xl rounded-[2rem] max-w-lg w-full p-6 sm:p-8 shadow-2xl relative reason-animate max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+            <button onclick="closeCustomizeModal()" aria-label="Close modal" class="absolute top-5 right-5 w-9 h-9 rounded-full accent-soft-bg text-[var(--text-muted)] hover:opacity-80 flex items-center justify-center transition-colors cursor-pointer">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+
+            <div class="flex items-center gap-2.5 mb-2">
+                <div class="w-9 h-9 rounded-xl accent-soft-bg accent-primary-text flex items-center justify-center">
+                    <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+                </div>
+                <h3 class="font-serif text-2xl font-medium">Personalize Our Sanctuary</h3>
+            </div>
+            <p class="text-xs text-[var(--text-muted)] mb-5">
+                Everything you save is stored safely in your browser so your personalized page stays ready anytime.
+            </p>
+
+            <form onsubmit="saveCustomizations(event)" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <div>
+                        <label for="input-recipient" class="block text-xs font-semibold mb-1">
+                            Recipient's Name
+                        </label>
+                        <input id="input-recipient" type="text" maxlength="32" required class="w-full px-3.5 py-2.5 rounded-xl themed-input text-sm">
+                    </div>
+
+                    <div>
+                        <label for="input-sender" class="block text-xs font-semibold mb-1">
+                            Your Signature
+                        </label>
+                        <input id="input-sender" type="text" maxlength="32" required class="w-full px-3.5 py-2.5 rounded-xl themed-input text-sm">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="input-start-date" class="block text-xs font-semibold mb-1">
+                        Together Since (Start Date &amp; Time)
+                    </label>
+                    <input id="input-start-date" type="datetime-local" required class="w-full px-3.5 py-2.5 rounded-xl themed-input text-sm">
+                </div>
+
+                <div>
+                    <label for="input-message" class="block text-xs font-semibold mb-1">
+                        Wax-Sealed Love Letter Message
+                    </label>
+                    <textarea id="input-message" rows="3" maxlength="360" required class="w-full px-3.5 py-2.5 rounded-xl themed-input text-sm font-serif italic resize-none"></textarea>
+                </div>
+
+                <!-- Add a Custom Reason to the Card Deck -->
+                <div class="pt-2 border-t border-[var(--accent-border)]">
+                    <label for="input-new-reason" class="block text-xs font-semibold mb-1">
+                        Add a New Reason to the Card Deck (Optional)
+                    </label>
+                    <div class="flex gap-2">
+                        <input id="input-new-reason" type="text" maxlength="160" placeholder="e.g., The way you hold my hand when we walk..." class="flex-1 px-3.5 py-2 rounded-xl themed-input text-xs">
+                        <button type="button" onclick="addCustomReason()" class="px-3.5 py-2 rounded-xl accent-soft-bg accent-text text-xs font-semibold hover:opacity-85 cursor-pointer shrink-0">
+                            + Add
+                        </button>
+                    </div>
+                    <p id="reason-added-feedback" class="text-[11px] accent-primary-text mt-1 hidden">
+                        Added to your card deck!
+                    </p>
+                </div>
+
+                <div class="flex items-center justify-between gap-2.5 pt-3">
+                    <button type="button" onclick="resetSavedData()" class="text-[11px] text-[var(--text-muted)] hover:underline cursor-pointer">
+                        Reset Defaults
+                    </button>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="closeCustomizeModal()" class="px-4 py-2.5 rounded-xl text-xs font-medium text-[var(--text-muted)] cursor-pointer">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-6 py-2.5 rounded-xl text-xs font-semibold text-white accent-gradient-btn shadow-md cursor-pointer flex items-center gap-1.5">
+                            <i data-lucide="check" class="w-3.5 h-3.5"></i> Save Changes
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         MODAL 2: ADD NEW POLAROID MEMORY MODAL
+         ========================================================================== -->
+    <div id="memory-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop" onclick="closeMemoryModal()">
+        <div class="modal-box backdrop-blur-xl rounded-[2rem] max-w-md w-full p-6 sm:p-8 shadow-2xl relative reason-animate" onclick="event.stopPropagation()">
+            <button onclick="closeMemoryModal()" aria-label="Close memory modal" class="absolute top-5 right-5 w-9 h-9 rounded-full accent-soft-bg text-[var(--text-muted)] flex items-center justify-center cursor-pointer">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+
+            <div class="flex items-center gap-2.5 mb-2">
+                <div class="w-9 h-9 rounded-xl accent-soft-bg accent-primary-text flex items-center justify-center">
+                    <i data-lucide="camera" class="w-5 h-5"></i>
+                </div>
+                <h3 class="font-serif text-2xl font-medium">Add a Polaroid Memory</h3>
+            </div>
+            <p class="text-xs text-[var(--text-muted)] mb-5">
+                Capture a special milestone with a front caption and a secret handwritten note on the back.
+            </p>
+
+            <form onsubmit="saveNewMemory(event)" class="space-y-4">
+                <div>
+                    <label for="mem-title" class="block text-xs font-semibold mb-1">Memory Title</label>
+                    <input id="mem-title" type="text" maxlength="36" required placeholder="e.g., Sunset Walk by the Pier" class="w-full px-3.5 py-2.5 rounded-xl themed-input text-sm">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label for="mem-date" class="block text-xs font-semibold mb-1">Date / Season</label>
+                        <input id="mem-date" type="text" maxlength="24" required placeholder="e.g., October 12" class="w-full px-3.5 py-2.5 rounded-xl themed-input text-sm">
+                    </div>
+                    <div>
+                        <label for="mem-scene" class="block text-xs font-semibold mb-1">Illustration Scene</label>
+                        <select id="mem-scene" class="w-full px-3 py-2.5 rounded-xl themed-input text-sm">
+                            <option value="stargazing">Starlit Night</option>
+                            <option value="coffee">Cozy Coffee Date</option>
+                            <option value="sunset">Golden Sunset</option>
+                            <option value="bouquet">Blooming Roses</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="mem-note" class="block text-xs font-semibold mb-1">Secret Back-of-Photo Note</label>
+                    <textarea id="mem-note" rows="3" maxlength="190" required placeholder="Write what made this moment unforgettable..." class="w-full px-3.5 py-2.5 rounded-xl themed-input text-sm font-serif italic resize-none"></textarea>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeMemoryModal()" class="px-4 py-2.5 rounded-xl text-xs font-medium text-[var(--text-muted)] cursor-pointer">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-6 py-2.5 rounded-xl text-xs font-semibold text-white accent-gradient-btn shadow-md cursor-pointer flex items-center gap-1.5">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Pin to Scrapbook
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        /* ==========================================================================
+           0. DEFAULT STATE & LOCALSTORAGE PERSISTENCE
+           ========================================================================== */
+        const STORAGE_KEY = 'love_sanctuary_state_v1';
+
+        const defaultState = {
+            theme: 'blush',
+            recipient: 'My Favorite Person',
+            sender: 'Your Admirer',
+            startDate: '2024-02-14T19:30',
+            message: '“From the moment you walked into my life, ordinary days turned into golden memories. Thank you for your warmth, your laughter, and the quiet magic you bring simply by being you. Loving you is the easiest, sweetest thing I have ever done.”',
+            reasons: [
+                { icon: 'sun', text: '“The way your eyes light up whenever you talk about the things that make you happy.”' },
+                { icon: 'smile', text: '“Your laugh—it is effortlessly my favorite sound in the entire world.”' },
+                { icon: 'coffee', text: '“How even the simplest, quietest moments feel like a cozy adventure when I am with you.”' },
+                { icon: 'heart-handshake', text: '“Your gentle kindness and the way you make everyone around you feel deeply cared for.”' },
+                { icon: 'moon-star', text: '“That feeling of pure peace and home the instant I hear your voice or hold your hand.”' },
+                { icon: 'sparkles', text: '“The little thoughtful things you remember without ever making a big deal out of them.”' },
+                { icon: 'music', text: '“How you turn ordinary days into stories I want to remember for the rest of my life.”' },
+                { icon: 'flower-2', text: '“Your warmth, your patience, and the way you inspire me to be a softer, better person.”' },
+                { icon: 'compass', text: '“Knowing that wherever life takes us, as long as you are beside me, I am already home.”' },
+                { icon: 'infinity', text: '“Simply everything about you—all the things you are, and all the things we are yet to be.”' }
+            ],
+            memories: [
+                {
+                    id: 'm1',
+                    title: 'Our First Coffee & Endless Talks',
+                    date: 'Chapter I',
+                    scene: 'coffee',
+                    note: '“Two hours felt like five minutes. I walked home smiling like an idiot because I already knew you were someone extraordinary.”'
+                },
+                {
+                    id: 'm2',
+                    title: 'Midnight Stargazing Together',
+                    date: 'Chapter II',
+                    scene: 'stargazing',
+                    note: '“Looking up at the constellations with your hand tucked into mine—nothing in the universe felt brighter than being next to you.”'
+                },
+                {
+                    id: 'm3',
+                    title: 'Golden Hour Promenade',
+                    date: 'Chapter III',
+                    scene: 'sunset',
+                    note: '“The sky turned rose and amber, and I remember thinking I never want to stop making memories with you.”'
+                }
+            ],
+            redeemedCoupons: {}
+        };
+
+        let appState = loadState();
+
+        function loadState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return structuredClone(defaultState);
+                const parsed = JSON.parse(raw);
+                return {
+                    ...structuredClone(defaultState),
+                    ...parsed,
+                    reasons: Array.isArray(parsed.reasons) && parsed.reasons.length ? parsed.reasons : structuredClone(defaultState.reasons),
+                    memories: Array.isArray(parsed.memories) && parsed.memories.length ? parsed.memories : structuredClone(defaultState.memories),
+                    redeemedCoupons: parsed.redeemedCoupons || {}
+                };
+            } catch (err) {
+                return structuredClone(defaultState);
+            }
+        }
+
+        function persistState() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+            } catch (err) {}
+        }
+
+        function resetSavedData() {
+            localStorage.removeItem(STORAGE_KEY);
+            appState = structuredClone(defaultState);
+            reasonIndex = 0;
+            applyTheme(appState.theme);
+            syncAllUI();
+            closeCustomizeModal();
+            playLoveChime(659.25, 0.05);
+        }
+
+        /* ==========================================================================
+           1. THEME SWITCHER (BLUSH ROSE, STARLIGHT MIDNIGHT, SUNSET PEACH)
+           ========================================================================== */
+        let activePalette = ['#FF85A1', '#F45B7A', '#FFB3C6', '#D49A89', '#FFD6E0', '#F7C59F'];
+
+        function applyTheme(themeName) {
+            appState.theme = themeName;
+            if (themeName === 'blush') {
+                document.documentElement.removeAttribute('data-theme');
+                activePalette = ['#FF85A1', '#F45B7A', '#FFB3C6', '#D49A89', '#FFD6E0'];
+            } else if (themeName === 'midnight') {
+                document.documentElement.setAttribute('data-theme', 'midnight');
+                activePalette = ['#FF7597', '#FF9EBB', '#E6B89C', '#C77DFF', '#FFE5EC'];
+            } else if (themeName === 'sunset') {
+                document.documentElement.setAttribute('data-theme', 'sunset');
+                activePalette = ['#E86F58', '#F4A261', '#E76F51', '#D99B66', '#FFD8CC'];
+            }
+
+            // Highlight active pill button
+            ['blush', 'midnight', 'sunset'].forEach(t => {
+                const btn = document.getElementById(`theme-btn-${t}`);
+                if (!btn) return;
+                if (t === themeName) {
+                    btn.classList.add('accent-soft-bg', 'accent-text', 'shadow-sm');
+                } else {
+                    btn.classList.remove('accent-soft-bg', 'accent-text', 'shadow-sm');
+                }
+            });
+        }
+
+        function setTheme(themeName) {
+            applyTheme(themeName);
+            persistState();
+            playLoveChime(783.99, 0.05);
+        }
+
+        /* ==========================================================================
+           2. WEB AUDIO API: GENTLE ROMANTIC CHIMES & SOFT HEARTBEAT
+           ========================================================================== */
+        let audioCtx = null;
+        let audioEnabled = false;
+        let heartbeatInterval = null;
+        const romanticNotes = [349.23, 440.00, 523.25, 659.25, 783.99, 880.00, 1046.50];
+
+        function ensureAudioContext() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playLoveChime(freq = null, volume = 0.055) {
+            if (!audioEnabled) return;
+            try {
+                ensureAudioContext();
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                const note = freq || romanticNotes[Math.floor(Math.random() * romanticNotes.length)];
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(note, now);
+                gain.gain.setValueAtTime(0.0001, now);
+                gain.gain.exponentialRampToValueAtTime(volume, now + 0.035);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.2);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 2.3);
+            } catch (err) {}
+        }
+
+        function playSoftHeartbeat() {
+            if (!audioEnabled) return;
+            try {
+                ensureAudioContext();
+                const now = audioCtx.currentTime;
+                const triggerBeat = (offset, peakFreq, vol) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(peakFreq, now + offset);
+                    osc.frequency.exponentialRampToValueAtTime(36, now + offset + 0.16);
+                    gain.gain.setValueAtTime(0.0001, now + offset);
+                    gain.gain.exponentialRampToValueAtTime(vol, now + offset + 0.02);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.22);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now + offset);
+                    osc.stop(now + offset + 0.25);
+                };
+                triggerBeat(0, 72, 0.09);
+                triggerBeat(0.24, 62, 0.065);
+            } catch (err) {}
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            const btn = document.getElementById('audio-btn');
+            const icon = document.getElementById('audio-icon');
+            const label = document.getElementById('audio-label');
+
+            if (audioEnabled) {
+                ensureAudioContext();
+                playLoveChime(523.25, 0.06);
+                setTimeout(() => playLoveChime(659.25, 0.06), 140);
+                setTimeout(() => playLoveChime(783.99, 0.07), 280);
+                icon.setAttribute('data-lucide', 'volume-2');
+                label.textContent = 'Melody On';
+                btn.classList.add('ring-2', 'ring-pink-300/60');
+
+                heartbeatInterval = setInterval(() => {
+                    if (audioEnabled) {
+                        playSoftHeartbeat();
+                        if (Math.random() > 0.45) {
+                            setTimeout(() => playLoveChime(null, 0.03), 500);
+                        }
+                    }
+                }, 2600);
+            } else {
+                icon.setAttribute('data-lucide', 'volume-x');
+                label.textContent = 'Melody Off';
+                btn.classList.remove('ring-2', 'ring-pink-300/60');
+                clearInterval(heartbeatInterval);
+            }
+            lucide.createIcons();
+        }
+
+        /* ==========================================================================
+           3. LIVE "TOGETHER SINCE" LOVE COUNTER & MILESTONE CELEBRATION
+           ========================================================================== */
+        function updateLoveCounter() {
+            const start = new Date(appState.startDate);
+            const now = new Date();
+            const diffMs = Math.max(0, now - start);
+
+            const totalSeconds = Math.floor(diffMs / 1000);
+            const days = Math.floor(totalSeconds / 86400);
+            const hours = Math.floor((totalSeconds % 86400) / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            document.getElementById('counter-days').textContent = days.toLocaleString();
+            document.getElementById('counter-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('counter-minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('counter-seconds').textContent = String(seconds).padStart(2, '0');
+
+            // Format readable start date
+            if (!isNaN(start.getTime())) {
+                const formatted = start.toLocaleDateString(undefined, {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                document.getElementById('since-date-display').textContent = formatted;
+            }
+
+            // Milestone celebration detector
+            const milestoneEl = document.getElementById('milestone-text');
+            if (days >= 365 && days % 365 === 0) {
+                const yrs = Math.floor(days / 365);
+                milestoneEl.textContent = `Happy ${yrs}-Year Anniversary Milestone!`;
+            } else if (days > 0 && days % 100 === 0) {
+                milestoneEl.textContent = `Celebrating ${days} magical days together!`;
+            } else if (days >= 365) {
+                const years = Math.floor(days / 365);
+                const remDays = days % 365;
+                milestoneEl.textContent = `${years} year${years > 1 ? 's' : ''} & ${remDays} days of loving you`;
+            } else {
+                const nextHundred = Math.ceil((days + 1) / 100) * 100;
+                const toGo = nextHundred - days;
+                milestoneEl.textContent = `${toGo} day${toGo === 1 ? '' : 's'} until our ${nextHundred}-day milestone`;
+            }
+        }
+
+        /* ==========================================================================
+           4. WAX-SEALED LOVE LETTER ENVELOPE
+           ========================================================================== */
+        let isEnvelopeOpen = false;
+
+        function toggleEnvelope() {
+            isEnvelopeOpen = !isEnvelopeOpen;
+            const envelope = document.getElementById('love-envelope');
+            const hint = document.getElementById('envelope-hint');
+            envelope.classList.toggle('is-open', isEnvelopeOpen);
+
+            if (isEnvelopeOpen) {
+                hint.innerHTML = '<i data-lucide="sparkles" class="w-3.5 h-3.5 accent-primary-text"></i> A piece of my heart, unfolded for you';
+                playLoveChime(659.25, 0.06);
+                setTimeout(() => playLoveChime(880.00, 0.06), 160);
+                const rect = envelope.getBoundingClientRect();
+                spawnBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 16, false);
+            } else {
+                hint.innerHTML = '<i data-lucide="hand" class="w-3.5 h-3.5 accent-primary-text"></i> Tap the wax seal to unseal your letter';
+                playLoveChime(523.25, 0.05);
+            }
+            lucide.createIcons();
+        }
+
+        /* ==========================================================================
+           5. "REASONS I ADORE YOU" CARD DECK
+           ========================================================================== */
+        let reasonIndex = 0;
+
+        function renderReason() {
+            const card = document.getElementById('reason-card');
+            const iconWrap = document.getElementById('reason-icon-wrap');
+            const textEl = document.getElementById('reason-text');
+            const counterEl = document.getElementById('reason-counter');
+
+            if (reasonIndex >= appState.reasons.length) reasonIndex = 0;
+            const current = appState.reasons[reasonIndex];
+
+            card.classList.remove('reason-animate');
+            void card.offsetWidth;
+            card.classList.add('reason-animate');
+
+            iconWrap.innerHTML = `<i data-lucide="${current.icon || 'heart'}" class="w-6 h-6"></i>`;
+            textEl.textContent = current.text;
+            counterEl.textContent = `#${reasonIndex + 1} of ${appState.reasons.length}`;
+            lucide.createIcons();
+        }
+
+        function nextReason() {
+            reasonIndex = (reasonIndex + 1) % appState.reasons.length;
+            renderReason();
+            playLoveChime(romanticNotes[(reasonIndex + 2) % romanticNotes.length], 0.055);
+        }
+
+        function prevReason() {
+            reasonIndex = (reasonIndex - 1 + appState.reasons.length) % appState.reasons.length;
+            renderReason();
+            playLoveChime(romanticNotes[reasonIndex % romanticNotes.length], 0.05);
+        }
+
+        /* ==========================================================================
+           6. VIRTUAL LOVE JAR / BOTTLE OF GLOWING WISHES
+           ========================================================================== */
+        const loveWishes = [
+            { tag: 'Promise #01', text: '“I wish for a thousand quiet Sunday mornings with coffee, tangled blankets, and your sleepy smile.”' },
+            { tag: 'Stardust Fortune', text: '“No matter how busy life gets, I will always pause to listen to your heart and hold your hand.”' },
+            { tag: 'Adventure Wish', text: '“Here is to spontaneous road trips, singing our favorite songs off-key, and getting lost together.”' },
+            { tag: 'Midnight Whisper', text: '“Whenever you need comfort, remember you have a permanent home right inside my arms.”' },
+            { tag: 'Future Memory', text: '“I cannot wait to look back decades from now and still feel butterflies every time you walk into the room.”' },
+            { tag: 'Sweet Blessing', text: '“May your days always be as warm, gentle, and radiant as the love you bring into my world.”' },
+            { tag: 'Golden Vow', text: '“In every lifetime, in every universe, my soul would still search the crowd until it found you.”' }
+        ];
+
+        let lastWishIdx = -1;
+
+        function drawLoveWish() {
+            const jar = document.getElementById('love-jar-container');
+            const wishText = document.getElementById('wish-text');
+            const wishTag = document.getElementById('wish-tag');
+            const wishBox = document.getElementById('wish-paper-box');
+
+            jar.classList.remove('jar-shaking');
+            void jar.offsetWidth;
+            jar.classList.add('jar-shaking');
+
+            let idx = Math.floor(Math.random() * loveWishes.length);
+            if (idx === lastWishIdx) idx = (idx + 1) % loveWishes.length;
+            lastWishIdx = idx;
+
+            const chosen = loveWishes[idx];
+
+            wishBox.classList.remove('reason-animate');
+            void wishBox.offsetWidth;
+            wishBox.classList.add('reason-animate');
+
+            wishTag.textContent = chosen.tag;
+            wishText.textContent = chosen.text;
+
+            playLoveChime(880, 0.055);
+            setTimeout(() => playLoveChime(1046.5, 0.05), 140);
+
+            const rect = jar.getBoundingClientRect();
+            spawnBurst(rect.left + rect.width / 2, rect.top + 30, 12, false);
+        }
+
+        /* ==========================================================================
+           7. INTERACTIVE POLAROID MEMORY SCRAPBOOK (3D FLIP + BESPOKE SVG ART)
+           ========================================================================== */
+        function getPolaroidSceneSVG(scene) {
+            if (scene === 'stargazing') {
+                return `
+                <svg viewBox="0 0 280 175" class="w-full h-full object-cover">
+                    <defs>
+                        <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#1E1633"/>
+                            <stop offset="65%" stop-color="#4A274F"/>
+                            <stop offset="100%" stop-color="#B55476"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="280" height="175" fill="url(#skyGrad)"/>
+                    <circle cx="222" cy="40" r="16" fill="#FFF4D6" opacity="0.92"/>
+                    <circle cx="215" cy="36" r="14" fill="#2A1D42"/>
+                    <circle cx="48" cy="32" r="1.8" fill="#FFF"/>
+                    <circle cx="92" cy="24" r="1.4" fill="#FFD6E0"/>
+                    <circle cx="145" cy="38" r="2" fill="#FFF"/>
+                    <circle cx="176" cy="22" r="1.3" fill="#FFF"/>
+                    <circle cx="72" cy="58" r="1.5" fill="#FFF"/>
+                    <path d="M92 24L145 38L176 22" stroke="#FFD6E0" stroke-width="0.7" stroke-dasharray="2 3" opacity="0.6"/>
+                    <path d="M0 140Q75 118 145 135T280 125V175H0Z" fill="#23142B"/>
+                    <circle cx="132" cy="126" r="5" fill="#140B1A"/>
+                    <circle cx="145" cy="128" r="4.8" fill="#140B1A"/>
+                    <path d="M125 145C125 136 138 136 138 145Z" fill="#140B1A"/>
+                    <path d="M139 145C139 137 151 137 151 145Z" fill="#140B1A"/>
+                </svg>`;
+            }
+            if (scene === 'coffee') {
+                return `
+                <svg viewBox="0 0 280 175" class="w-full h-full object-cover">
+                    <defs>
+                        <linearGradient id="cafeGrad" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#FFE8EC"/>
+                            <stop offset="100%" stop-color="#F7D1C6"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="280" height="175" fill="url(#cafeGrad)"/>
+                    <ellipse cx="140" cy="148" rx="115" ry="22" fill="#E8B4A6" opacity="0.55"/>
+                    <!-- Left Cup -->
+                    <path d="M74 92H122L116 132C115 138 110 142 104 142H92C86 142 81 138 80 132L74 92Z" fill="#FFFDFB"/>
+                    <path d="M121 98C131 98 131 116 120 116" stroke="#FFFDFB" stroke-width="4" fill="none"/>
+                    <path d="M90 78C87 70 95 66 92 58" stroke="#D49A89" stroke-width="2" stroke-linecap="round" fill="none"/>
+                    <!-- Right Cup -->
+                    <path d="M156 92H204L198 132C197 138 192 142 186 142H174C168 142 163 138 162 132L156 92Z" fill="#FFFDFB"/>
+                    <path d="M203 98C213 98 213 116 202 116" stroke="#FFFDFB" stroke-width="4" fill="none"/>
+                    <path d="M180 78C177 70 185 66 182 58" stroke="#D49A89" stroke-width="2" stroke-linecap="round" fill="none"/>
+                    <!-- Floating Heart Between Cups -->
+                    <path d="M140 76C140 76 128 67 128 59.5C128 55.5 131.2 52.5 135 52.5C137.4 52.5 139.2 53.8 140 55.6C140.8 53.8 142.6 52.5 145 52.5C148.8 52.5 152 55.5 152 59.5C152 67 140 76 140 76Z" fill="#F45B7A"/>
+                </svg>`;
+            }
+            if (scene === 'bouquet') {
+                return `
+                <svg viewBox="0 0 280 175" class="w-full h-full object-cover">
+                    <rect width="280" height="175" fill="#FFF0F4"/>
+                    <path d="M140 162L108 92H172L140 162Z" fill="#F3D2C1"/>
+                    <path d="M124 128L156 128" stroke="#F45B7A" stroke-width="4" stroke-linecap="round"/>
+                    <circle cx="122" cy="76" r="18" fill="#F45B7A"/>
+                    <circle cx="158" cy="76" r="18" fill="#FF85A1"/>
+                    <circle cx="140" cy="60" r="20" fill="#D6385B"/>
+                    <circle cx="110" cy="92" r="14" fill="#FFB3C6"/>
+                    <circle cx="170" cy="92" r="14" fill="#FFB3C6"/>
+                    <circle cx="140" cy="86" r="17" fill="#FF7597"/>
+                </svg>`;
+            }
+            // Default: Golden Sunset
+            return `
+            <svg viewBox="0 0 280 175" class="w-full h-full object-cover">
+                <defs>
+                    <linearGradient id="sunGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#FFD6E0"/>
+                        <stop offset="52%" stop-color="#F7B29C"/>
+                        <stop offset="100%" stop-color="#E87A90"/>
+                    </linearGradient>
+                </defs>
+                <rect width="280" height="175" fill="url(#sunGrad)"/>
+                <circle cx="140" cy="108" r="34" fill="#FFF6E5" opacity="0.9"/>
+                <path d="M0 122Q70 114 140 122T280 120V175H0Z" fill="#C95D78" opacity="0.65"/>
+                <path d="M0 138Q95 130 190 140T280 136V175H0Z" fill="#8C3B54" opacity="0.8"/>
+            </svg>`;
+        }
+
+        function renderPolaroids() {
+            const grid = document.getElementById('polaroid-grid');
+            grid.innerHTML = '';
+
+            appState.memories.forEach((mem, idx) => {
+                const tiltClass = idx % 3 === 0 ? 'sm:-rotate-1' : (idx % 3 === 1 ? 'sm:rotate-1' : 'sm:-rotate-0.5');
+                const wrapper = document.createElement('div');
+                wrapper.className = `polaroid-scene ${tiltClass} hover:rotate-0 transition-transform duration-300`;
+
+                wrapper.innerHTML = `
+                    <div class="polaroid-card-3d" onclick="this.classList.toggle('is-flipped'); playLoveChime(659.25, 0.045);" role="button" tabindex="0" aria-label="Flip memory card: ${escapeHTML(mem.title)}">
+                        <div class="washi-tape"></div>
+
+                        <!-- Front of Polaroid -->
+                        <div class="polaroid-face">
+                            <div class="w-full h-44 rounded-xl overflow-hidden bg-blush-50 relative">
+                                ${getPolaroidSceneSVG(mem.scene)}
+                                <span class="absolute bottom-2 right-2 px-2.5 py-0.5 rounded-full bg-white/85 backdrop-blur-sm text-[10px] font-semibold text-[#875A67]">
+                                    ${escapeHTML(mem.date)}
+                                </span>
+                            </div>
+                            <div class="pt-3 flex items-center justify-between gap-2">
+                                <h3 class="font-script text-2xl text-[#4A2530] leading-tight truncate">
+                                    ${escapeHTML(mem.title)}
+                                </h3>
+                                <span class="text-[10px] uppercase tracking-wider text-[#A86B5B] font-semibold shrink-0 flex items-center gap-1">
+                                    Flip <i data-lucide="rotate-cw" class="w-3 h-3"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Back of Polaroid (Secret Handwritten Note) -->
+                        <div class="polaroid-face polaroid-back">
+                            <div class="flex items-center justify-between border-b border-blush-100 pb-2">
+                                <span class="text-[11px] font-semibold uppercase tracking-wider text-[#D6385B]">
+                                    ${escapeHTML(mem.date)}
+                                </span>
+                                <i data-lucide="heart" class="w-4 h-4 text-[#F45B7A] fill-current"></i>
+                            </div>
+                            <p class="font-serif italic text-sm sm:text-[15px] leading-relaxed text-[#4A2530] my-auto">
+                                ${escapeHTML(mem.note)}
+                            </p>
+                            <div class="text-right text-[11px] text-[#875A67] pt-2 border-t border-blush-100">
+                                Tap to see photo again
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(wrapper);
+            });
+
+            lucide.createIcons();
+        }
+
+        function openMemoryModal() {
+            const modal = document.getElementById('memory-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeMemoryModal() {
+            const modal = document.getElementById('memory-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function saveNewMemory(e) {
+            e.preventDefault();
+            const title = document.getElementById('mem-title').value.trim();
+            const date = document.getElementById('mem-date').value.trim();
+            const scene = document.getElementById('mem-scene').value;
+            let note = document.getElementById('mem-note').value.trim();
+
+            if (!title || !note) return;
+            if (!note.startsWith('“')) note = `“${note}”`;
+
+            appState.memories.unshift({
+                id: 'm_' + Date.now(),
+                title,
+                date: date || 'Forever',
+                scene,
+                note
+            });
+
+            persistState();
+            renderPolaroids();
+            closeMemoryModal();
+            e.target.reset();
+            playLoveChime(880, 0.06);
+        }
+
+        /* ==========================================================================
+           8. LOVE COUPONS / INTERACTIVE CANVAS SCRATCH-OFF VOUCHERS
+           ========================================================================== */
+        const dateCoupons = [
+            {
+                id: 'c_stargaze',
+                title: 'Midnight Stargazing',
+                subtitle: 'Warm blankets, hot cocoa & stargazing together',
+                icon: 'moon-star',
+                code: 'NO EXPIRATION'
+            },
+            {
+                id: 'c_breakfast',
+                title: 'Breakfast in Bed',
+                subtitle: 'Your favorite morning treats served with kisses',
+                icon: 'coffee',
+                code: 'GOOD ANYTIME'
+            },
+            {
+                id: 'c_movie',
+                title: 'Movie Marathon & Cuddles',
+                subtitle: 'Unlimited snacks & your pick of every film',
+                icon: 'film',
+                code: 'VIP PASS'
+            }
+        ];
+
+        function renderCoupons() {
+            const grid = document.getElementById('coupons-grid');
+            grid.innerHTML = '';
+
+            dateCoupons.forEach((coupon) => {
+                const isRedeemed = Boolean(appState.redeemedCoupons[coupon.id]);
+                const card = document.createElement('div');
+                card.className = 'coupon-ticket p-6 min-h-[190px] flex flex-col justify-between select-none';
+
+                card.innerHTML = `
+                    <!-- Ticket Side Notches -->
+                    <div class="w-5 h-5 rounded-full bg-[var(--bg-2)] absolute -left-2.5 top-1/2 -translate-y-1/2 z-20"></div>
+                    <div class="w-5 h-5 rounded-full bg-[var(--bg-2)] absolute -right-2.5 top-1/2 -translate-y-1/2 z-20"></div>
+
+                    <!-- Underlying Voucher Content -->
+                    <div class="flex items-start justify-between gap-2">
+                        <div class="w-10 h-10 rounded-2xl bg-[#FFEFF3] text-[#F45B7A] flex items-center justify-center shrink-0">
+                            <i data-lucide="${coupon.icon}" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full bg-[#FFF0E6] text-[#A86B5B]">
+                            ${coupon.code}
+                        </span>
+                    </div>
+
+                    <div class="my-3">
+                        <h3 class="font-serif text-xl font-semibold text-[#4A2530]">${coupon.title}</h3>
+                        <p class="text-xs text-[#875A67] mt-1">${coupon.subtitle}</p>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-2 border-t border-dashed border-blush-200">
+                        <span class="font-script text-lg text-[#D6385B]">Admit One Soulmate</span>
+                        <button onclick="redeemCoupon('${coupon.id}', this)" class="px-3.5 py-1.5 rounded-full text-[11px] font-semibold ${isRedeemed ? 'bg-blush-100 text-blush-600' : 'bg-[#F45B7A] text-white hover:bg-[#D6385B]'} transition-colors cursor-pointer">
+                            ${isRedeemed ? 'Redeemed' : 'Stamp Redeem'}
+                        </button>
+                    </div>
+
+                    ${isRedeemed ? '<div class="redeem-stamp">REDEEMED WITH LOVE</div>' : ''}
+
+                    <!-- Interactive Rose-Gold Foil Canvas Overlay -->
+                    <canvas id="scratch-${coupon.id}" class="scratch-canvas ${isRedeemed ? 'is-cleared' : ''}"></canvas>
+                `;
+
+                grid.appendChild(card);
+
+                if (!isRedeemed) {
+                    requestAnimationFrame(() => initScratchCanvas(`scratch-${coupon.id}`, coupon.title));
+                }
+            });
+
+            lucide.createIcons();
+        }
+
+        function initScratchCanvas(canvasId, labelText) {
+            const c = document.getElementById(canvasId);
+            if (!c) return;
+            const parent = c.parentElement;
+            const rect = parent.getBoundingClientRect();
+            const dpr = window.devicePixelRatio || 1;
+
+            c.width = Math.max(240, rect.width) * dpr;
+            c.height = Math.max(180, rect.height) * dpr;
+
+            const sctx = c.getContext('2d');
+            sctx.scale(dpr, dpr);
+            const w = c.width / dpr;
+            const h = c.height / dpr;
+
+            // Rose-Gold Shimmer Foil Gradient
+            const grad = sctx.createLinearGradient(0, 0, w, h);
+            grad.addColorStop(0, '#E8B4A6');
+            grad.addColorStop(0.35, '#F7D9D2');
+            grad.addColorStop(0.7, '#D49A89');
+            grad.addColorStop(1, '#F2C1B6');
+            sctx.fillStyle = grad;
+            sctx.fillRect(0, 0, w, h);
+
+            // Subtle Diagonal Shimmer Lines
+            sctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+            sctx.lineWidth = 1.5;
+            for (let i = -h; i < w + h; i += 18) {
+                sctx.beginPath();
+                sctx.moveTo(i, 0);
+                sctx.lineTo(i + h, h);
+                sctx.stroke();
+            }
+
+            // Foil Prompt Text
+            sctx.fillStyle = '#5E3229';
+            sctx.font = '600 13px "Plus Jakarta Sans", sans-serif';
+            sctx.textAlign = 'center';
+            sctx.fillText('SCRATCH HERE TO REVEAL', w / 2, h / 2 - 4);
+            sctx.font = 'italic 13px "Playfair Display", serif';
+            sctx.fillText('A Special Date Night Gift', w / 2, h / 2 + 16);
+
+            let isDrawing = false;
+            let moveTicks = 0;
+
+            const scratchAt = (clientX, clientY) => {
+                const bounds = c.getBoundingClientRect();
+                const x = clientX - bounds.left;
+                const y = clientY - bounds.top;
+
+                sctx.globalCompositeOperation = 'destination-out';
+                sctx.beginPath();
+                sctx.arc(x, y, 22, 0, Math.PI * 2);
+                sctx.fill();
+
+                moveTicks++;
+                if (moveTicks % 18 === 0) {
+                    checkScratchProgress(c, sctx);
+                }
+            };
+
+            c.addEventListener('pointerdown', (e) => {
+                isDrawing = true;
+                c.setPointerCapture(e.pointerId);
+                scratchAt(e.clientX, e.clientY);
+                playLoveChime(987.77, 0.025);
+            });
+
+            c.addEventListener('pointermove', (e) => {
+                if (!isDrawing) return;
+                scratchAt(e.clientX, e.clientY);
+            });
+
+            c.addEventListener('pointerup', () => {
+                isDrawing = false;
+                checkScratchProgress(c, sctx);
+            });
+        }
+
+        function checkScratchProgress(c, sctx) {
+            if (c.classList.contains('is-cleared')) return;
+            try {
+                const pixels = sctx.getImageData(0, 0, c.width, c.height).data;
+                let transparent = 0;
+                const step = 32; // Sample every 8th pixel for speed
+                for (let i = 3; i < pixels.length; i += step) {
+                    if (pixels[i] === 0) transparent++;
+                }
+                const ratio = transparent / (pixels.length / step);
+                if (ratio > 0.45) {
+                    c.classList.add('is-cleared');
+                    playLoveChime(783.99, 0.06);
+                    const r = c.getBoundingClientRect();
+                    spawnBurst(r.left + r.width / 2, r.top + r.height / 2, 16, true);
+                }
+            } catch (err) {}
+        }
+
+        function redeemCoupon(couponId, btnEl) {
+            if (appState.redeemedCoupons[couponId]) return;
+            appState.redeemedCoupons[couponId] = true;
+            persistState();
+
+            const ticket = btnEl.closest('.coupon-ticket');
+            const canvasOverlay = ticket.querySelector('.scratch-canvas');
+            if (canvasOverlay) canvasOverlay.classList.add('is-cleared');
+
+            btnEl.textContent = 'Redeemed';
+            btnEl.className = 'px-3.5 py-1.5 rounded-full text-[11px] font-semibold bg-blush-100 text-blush-600 cursor-default';
+
+            const stamp = document.createElement('div');
+            stamp.className = 'redeem-stamp';
+            stamp.textContent = 'REDEEMED WITH LOVE';
+            ticket.appendChild(stamp);
+
+            playLoveChime(659.25, 0.06);
+            setTimeout(() => playLoveChime(880, 0.07), 120);
+            const r = ticket.getBoundingClientRect();
+            spawnBurst(r.left + r.width / 2, r.top + r.height / 2, 22, true);
+        }
+
+        function resetAllCoupons() {
+            appState.redeemedCoupons = {};
+            persistState();
+            renderCoupons();
+            playLoveChime(523.25, 0.05);
+        }
+
+        /* ==========================================================================
+           9. PLAYFUL "WILL YOU BE MY FOREVER?" DODGING BUTTON MINI-GAME
+           ========================================================================== */
+        const playfulNoMessages = [
+            "Nice try! That button is a little shy",
+            "Oops, slipped right past your cursor!",
+            "Are you sure? Look how radiant the 'Yes' button is",
+            "Error 404: 'No' not found in my heart!",
+            "You cannot catch me! Just tap Yes already",
+            "My heart refuses to accept that answer!"
+        ];
+
+        let dodgeCount = 0;
+        let yesScale = 1;
+
+        function dodgeNoButton(e) {
+            if (e) e.preventDefault();
+            const noBtn = document.getElementById('no-btn');
+            const yesBtn = document.getElementById('yes-btn');
+            const arena = document.getElementById('button-arena');
+            const promptEl = document.getElementById('playful-prompt');
+
+            const arenaRect = arena.getBoundingClientRect();
+            const btnWidth = noBtn.offsetWidth || 70;
+            const btnHeight = noBtn.offsetHeight || 38;
+
+            const maxX = Math.max(10, arenaRect.width - btnWidth - 12);
+            const maxY = Math.max(8, arenaRect.height - btnHeight - 8);
+
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = `${Math.floor(Math.random() * maxX)}px`;
+            noBtn.style.top = `${Math.floor(Math.random() * maxY)}px`;
+
+            yesScale = Math.min(1.28, yesScale + 0.04);
+            yesBtn.style.transform = `scale(${yesScale})`;
+
+            promptEl.textContent = playfulNoMessages[dodgeCount % playfulNoMessages.length];
+            dodgeCount++;
+            playLoveChime(880, 0.04);
+        }
+
+        function handleYesClick() {
+            document.getElementById('question-stage').classList.add('hidden');
+            document.getElementById('button-arena').classList.add('hidden');
+            document.getElementById('celebration-stage').classList.remove('hidden');
+
+            playLoveChime(523.25, 0.07);
+            setTimeout(() => playLoveChime(659.25, 0.07), 110);
+            setTimeout(() => playLoveChime(783.99, 0.07), 220);
+            setTimeout(() => playLoveChime(1046.50, 0.08), 330);
+
+            triggerHeartExplosion();
+        }
+
+        function triggerHeartExplosion() {
+            const card = document.getElementById('forever-card');
+            const rect = card.getBoundingClientRect();
+            spawnBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 55, true);
+        }
+
+        /* ==========================================================================
+           10. PERSONALIZATION MODAL HANDLERS & SYNC
+           ========================================================================== */
+        function syncAllUI() {
+            document.getElementById('header-recipient').textContent = appState.recipient;
+            document.getElementById('hero-recipient').textContent = appState.recipient;
+            document.getElementById('letter-recipient').textContent = appState.recipient;
+            document.getElementById('footer-recipient').textContent = appState.recipient;
+            document.getElementById('letter-sender').textContent = appState.sender;
+            document.getElementById('letter-body').textContent = appState.message;
+
+            updateLoveCounter();
+            renderReason();
+            renderPolaroids();
+            renderCoupons();
+        }
+
+        function openCustomizeModal(focusTarget = null) {
+            const modal = document.getElementById('customize-modal');
+            document.getElementById('input-recipient').value = appState.recipient;
+            document.getElementById('input-sender').value = appState.sender;
+            document.getElementById('input-start-date').value = appState.startDate;
+            document.getElementById('input-message').value = appState.message.replace(/^[“"]|[”"]$/g, '');
+            document.getElementById('reason-added-feedback').classList.add('hidden');
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            if (focusTarget === 'date') {
+                setTimeout(() => document.getElementById('input-start-date').focus(), 80);
+            }
+        }
+
+        function closeCustomizeModal() {
+            const modal = document.getElementById('customize-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function addCustomReason() {
+            const input = document.getElementById('input-new-reason');
+            const val = input.value.trim();
+            if (!val) return;
+            const formatted = val.startsWith('“') ? val : `“${val}”`;
+            appState.reasons.push({ icon: 'heart', text: formatted });
+            reasonIndex = appState.reasons.length - 1;
+            input.value = '';
+
+            const fb = document.getElementById('reason-added-feedback');
+            fb.classList.remove('hidden');
+            persistState();
+            renderReason();
+            playLoveChime(880, 0.05);
+        }
+
+        function saveCustomizations(e) {
+            e.preventDefault();
+            const recVal = document.getElementById('input-recipient').value.trim();
+            const senVal = document.getElementById('input-sender').value.trim();
+            const dateVal = document.getElementById('input-start-date').value;
+            const msgVal = document.getElementById('input-message').value.trim();
+
+            if (recVal) appState.recipient = recVal;
+            if (senVal) appState.sender = senVal;
+            if (dateVal) appState.startDate = dateVal;
+            if (msgVal) {
+                appState.message = msgVal.startsWith('“') ? msgVal : `“${msgVal}”`;
+            }
+
+            persistState();
+            syncAllUI();
+            closeCustomizeModal();
+
+            if (!isEnvelopeOpen) {
+                toggleEnvelope();
+            } else {
+                playLoveChime(783.99, 0.06);
+            }
+        }
+
+        function escapeHTML(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        /* ==========================================================================
+           11. FLOATING HEARTS, BOKEH & CELEBRATION CONFETTI CANVAS
+           ========================================================================== */
+        const canvas = document.getElementById('love-canvas');
+        const ctx = canvas.getContext('2d');
+        let width = 0;
+        let height = 0;
+        let particles = [];
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function drawHeartShape(ctx, size) {
+            ctx.beginPath();
+            const topCurveHeight = size * 0.3;
+            ctx.moveTo(0, topCurveHeight);
+            ctx.bezierCurveTo(0, 0, -size / 2, 0, -size / 2, topCurveHeight);
+            ctx.bezierCurveTo(-size / 2, (size + topCurveHeight) / 2, 0, (size + topCurveHeight) / 1.4, 0, size);
+            ctx.bezierCurveTo(0, (size + topCurveHeight) / 1.4, size / 2, (size + topCurveHeight) / 2, size / 2, topCurveHeight);
+            ctx.bezierCurveTo(size / 2, 0, 0, 0, 0, topCurveHeight);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        class LoveParticle {
+            constructor(options = {}) {
+                this.x = options.x ?? Math.random() * width;
+                this.y = options.y ?? Math.random() * height;
+                this.isBurst = options.isBurst ?? false;
+                this.type = options.type ?? (Math.random() > 0.42 ? 'heart' : 'bokeh');
+                this.size = this.isBurst
+                    ? Math.random() * 12 + 8
+                    : (this.type === 'bokeh' ? Math.random() * 18 + 8 : Math.random() * 11 + 6);
+
+                if (this.isBurst) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = Math.random() * 6.5 + 2.2;
+                    this.vx = Math.cos(angle) * speed;
+                    this.vy = Math.sin(angle) * speed - 2.5;
+                    this.gravity = 0.11;
+                    this.life = 1.0;
+                    this.decay = Math.random() * 0.014 + 0.01;
+                } else {
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    this.vy = -(Math.random() * 0.55 + 0.2);
+                    this.gravity = 0;
+                    this.life = Infinity;
+                }
+
+                this.color = activePalette[Math.floor(Math.random() * activePalette.length)];
+                this.wobble = Math.random() * Math.PI * 2;
+                this.wobbleSpeed = Math.random() * 0.03 + 0.01;
+                this.rotation = (Math.random() - 0.5) * 0.6;
+                this.spin = (Math.random() - 0.5) * 0.06;
+                this.baseAlpha = this.type === 'bokeh' ? Math.random() * 0.28 + 0.1 : Math.random() * 0.42 + 0.18;
+            }
+
+            update() {
+                this.wobble += this.wobbleSpeed;
+                if (this.isBurst) {
+                    this.vy += this.gravity;
+                    this.vx *= 0.985;
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.rotation += this.spin;
+                    this.life -= this.decay;
+                } else {
+                    this.x += this.vx + Math.sin(this.wobble) * 0.35;
+                    this.y += this.vy;
+                    if (this.y < -30) {
+                        this.y = height + 30;
+                        this.x = Math.random() * width;
+                        this.color = activePalette[Math.floor(Math.random() * activePalette.length)];
+                    }
+                    if (this.x > width + 30) this.x = -30;
+                    if (this.x < -30) this.x = width + 30;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.globalAlpha = this.isBurst ? Math.max(0, this.life) : this.baseAlpha;
+
+                if (this.type === 'bokeh') {
+                    const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, this.size);
+                    grad.addColorStop(0, '#FFFFFF');
+                    grad.addColorStop(0.5, this.color);
+                    grad.addColorStop(1, 'rgba(255, 182, 193, 0)');
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                } else if (this.type === 'confetti') {
+                    ctx.fillStyle = this.color;
+                    ctx.fillRect(-this.size / 2, -this.size / 4, this.size, this.size / 2);
+                } else {
+                    ctx.fillStyle = this.color;
+                    drawHeartShape(ctx, this.size);
+                }
+
+                ctx.restore();
+            }
+        }
+
+        function spawnBurst(x, y, count = 18, includeConfetti = false) {
+            for (let i = 0; i < count; i++) {
+                const type = includeConfetti && Math.random() > 0.55 ? 'confetti' : 'heart';
+                particles.push(new LoveParticle({ x, y, isBurst: true, type }));
+            }
+        }
+
+        const ambientCount = window.innerWidth < 640 ? 26 : 44;
+        for (let i = 0; i < ambientCount; i++) {
+            particles.push(new LoveParticle());
+        }
+
+        document.addEventListener('pointerdown', (e) => {
+            if (['INPUT', 'TEXTAREA', 'BUTTON', 'SELECT', 'CANVAS'].includes(e.target.tagName)) return;
+            spawnBurst(e.clientX, e.clientY, 7, false);
+        });
+
+        function animateLoop() {
+            ctx.clearRect(0, 0, width, height);
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.update();
+                p.draw();
+                if (p.isBurst && p.life <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+            requestAnimationFrame(animateLoop);
+        }
+
+        window.onload = function () {
+            applyTheme(appState.theme);
+            syncAllUI();
+            setInterval(updateLoveCounter, 1000);
+            animateLoop();
+        };
+    </script>
+</body>
+</html>
